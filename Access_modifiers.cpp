@@ -1,27 +1,63 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
-class myclass1{
-	public:
-		myfun(){
-			cout << "This is public"<<endl;
-		}
+
+// Public
+class myclass1
+{
+public:
+	myfun()
+	{
+		cout << "This is public" << endl;
+	}
 };
 
-class myclass2{
-	private:
-	int radious;
-	public:
-	double area(){
-	 return 3.14*radius*radius;
-	} 
-}
+// Private
+class myclass2
+{
+private:
+	double radious;
 
-int main(){
-	myclass1 obj;
-	obj.myfun();
+public:
+	double area(double r)
+	{
+		radious = r;
+		return 3.14 * radious * radious;
+	}
+};
 
+//Protected
+class parent
+{
+protected:
+	int no;
+};
+
+class child : public parent
+{
+public:
+	void setId(int number)
+	{
+		no = number;
+	}
+	void message()
+	{
+		cout << "Your number is :" << no << endl;
+	}
+};
+
+int main()
+{
+	// public
+	myclass1 obj1;
+	obj1.myfun();
+
+	// private
 	myclass2 obj2;
-	obj2.radious=15;
 
-	cout << "Area is :"<< obj2.area<<endl;
+	cout << "Area is :" << obj2.area(15) << endl;
+
+	// Protected
+	child obj3;
+	obj3.setId(80);
+	obj3.message();
 }
