@@ -3,13 +3,13 @@ using namespace std;
 class constructor{
 	int m,n;
 	public:
-		constructor(void){
-			m=12;
-			n=20;
+		constructor(int a,int b=125){
+			m=a;
+			n=b;
 			cout<<"Value of m is :" <<m <<endl<< "Value of n is :"<<n<<endl;
 		}
 		
 };
 int main(){
-	constructor a;
-;}
+	constructor a1(12);
+	}
