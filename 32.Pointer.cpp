@@ -5,8 +5,7 @@ class myclass{
 		//Pointer as member variable
 		void create(){
 			int x=100;
-			int *ptr;
-			*ptr=x;
+			int *ptr=&x;
 			
 			cout<<"Value of x is :"<<x<<endl;
 			cout<<"Address of X is :"<<ptr<<endl;
