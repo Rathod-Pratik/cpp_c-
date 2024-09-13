@@ -47,49 +47,55 @@ void display(node *head)
 }
 
 /// Delete head of list
-void deleteAtHead(node *&head){
-    node* todelete = head;
+void deleteAtHead(node *&head)
+{
+    node *todelete = head;
     head = head->next;
     delete todelete;
 }
 
 // Delete specific value from list
-void deletion(node *&head, int value){
-    node* temp = head;
+void deletion(node *&head, int value)
+{
+    node *temp = head;
 
-    if(head == nullptr){  // If the list is empty
+    if (head == nullptr)
+    { // If the list is empty
         return;
     }
-    
+
     // Check if the value to be deleted is at the head
-    if(head->data == value){
+    if (head->data == value)
+    {
         deleteAtHead(head);
         return;
     }
 
     // Check if there is only one element in the list
-    if(head->next == nullptr){
+    if (head->next == nullptr)
+    {
         deleteAtHead(head);
         return;
     }
 
     // Traverse to find the node before the target node
-    while(temp->next->data!=value){
+    while (temp->next->data != value)
+    {
         temp = temp->next;
     }
 
-    if(temp->next == nullptr){ // If the value is not found
+    if (temp->next == nullptr)
+    { // If the value is not found
         return;
     }
 
-    node* todelete = temp->next;
+    node *todelete = temp->next;
     temp->next = temp->next->next;
 
     delete todelete;
 }
 
-
-//make a node and insert at first node
+// make a node and insert at first node
 void insertTop(node *&head, int value)
 {
     newnode = new node(value);
@@ -99,7 +105,7 @@ void insertTop(node *&head, int value)
     head = newnode;
 }
 
-//make a node and insert at specific position
+// make a node and insert at specific position
 void insertatPos(node *&head, int value)
 {
     int pos;
@@ -110,7 +116,7 @@ void insertatPos(node *&head, int value)
     temp = head;
 }
 
-//make a node and insert at specfic position
+// make a node and insert at specfic position
 void insertEnd(node *&head, int value)
 {
     newnode = new node(value);
@@ -124,39 +130,119 @@ void insertEnd(node *&head, int value)
     temp->next = newnode;
 }
 
-node* reverse(node *&head){
-    if(head==nullptr || head->next==nullptr){
+node *reverse(node *&head)
+{
+    if (head == nullptr || head->next == nullptr)
+    {
         return head;
     }
 
-    newnode =reverse(head->next);
-    head->next->next=head;
-    head->next=nullptr;
+    newnode = reverse(head->next);
+    head->next->next = head;
+    head->next = nullptr;
     return newnode;
+}
+void Sort(node *&head)
+{
+    if (!head || !head->next)
+        return; // If the list is empty or has only one node, it's already sorted.
+
+    bool swapped;
+    node *ptr1;
+    node *lptr = nullptr; // This will mark the end of the unsorted portion of the list
+
+    do
+    {
+        swapped = false;
+        ptr1 = head;
+
+        while (ptr1->next != lptr)
+        {
+            if (ptr1->data > ptr1->next->data)
+            {
+                // Swap the data
+                swap(ptr1->data, ptr1->next->data);
+                swapped = true;
+            }
+            ptr1 = ptr1->next;
+        }
+        lptr = ptr1; // Reduce the unsorted portion of the list
+    } while (swapped);
+}
+
+bool findNode(node* head, int value) {
+    node* temp = head;
+    while (temp != nullptr) {
+        if (temp->data == value) {
+            return true; // Value found
+        }
+        temp = temp->next;
+    }
+    return false; // Value not found
+}
+
+
+
+void Cout(node *&head)
+{
+    temp = head;
+    int a = 1;
+    temp = temp->next;
+    while (temp->next != nullptr)
+    {
+        temp = temp->next;
+        ++a;
+    }
+    if (a == 1)
+    {
+        cout << "There one element in the list" << endl;
+    }
+    else
+    {
+        cout << "There are " << a << " element in the list" << endl;
+    }
 }
 int main()
 {
     node *head = nullptr; // Head pointer initialized to nullptr (empty list)
 
-    create(head, 10);
-    create(head, 20);
-    create(head, 30);
+    // use to create node
+    //  create(head, 10);
+    //  create(head, 90);
+    create(head, 100);
 
+    // insert node at top of the list
     insertTop(head, 5);
+
+    // insert node at end of the list
     insertEnd(head, 35);
 
-    insertTop(head, 2);
-    insertEnd(head, 40);
-insertatPos(head,200);
+    // insert node at specific lacation of the list
+    insertatPos(head, 200);
+
+    // Display all node of the list
     display(head); // Display the list
 
-    deletion(head,30);
+    // delete the node from the list
+    // deletion(head, 30);
 
-    deleteAtHead(head);
-    display(head); // Display the list
+    // dlelete the fisrt node of the list
+    // deleteAtHead(head);
 
-    head=reverse(head);
-    display(head); // Display the list
+    // sort list in assending order
+    // Sort(head);
 
+    // display(head); // Display the list
+
+    // reverse the list
+    // head = reverse(head);
+    // display(head); // Display the list
+
+    //cout the length of the list
+    // Cout(head);
+
+    //find value in the node
+    int node=findNode(head,100);
+    cout<< "Value find at the "<<node<<" location";
     return 0;
 }
