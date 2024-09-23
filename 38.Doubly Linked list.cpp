@@ -13,7 +13,9 @@ public:
         prev = nullptr;
     }
 };
-node *newnode, *temp;
+
+node *newnode, *temp, *curr;
+
 void create(node *&head, int value)
 {
     newnode = new node(value);
@@ -92,25 +94,7 @@ void Count(node *&head)
     }
     cout << "\nThere are " << a << " nodes in the list" << endl;
 }
-/*
-void deleteAtPos(node *&head int Pos){
-    temp=head;
-    if(head==nullptr){
-        cout<<"List is empty "<<endl;
-    }
-    else{
-        if(head->next ==nullptr){
-            delete head;
-            return;
-        }
-        else{
-            for(int i = 1; i < pos - 1 && temp != nullptr; i++){
-                break;
-            }
-            temp->next
-        }
-    }
-}*/
+
 void deleteAtTail(node *&head)
 {
     temp = head;
@@ -125,7 +109,7 @@ void deleteAtTail(node *&head)
         if (head->next == nullptr)
         {
             delete head;
-            head=nullptr;
+            head = nullptr;
             return;
         }
         else
@@ -134,7 +118,7 @@ void deleteAtTail(node *&head)
             {
                 temp = temp->next;
             }
-            temp->prev->next=nullptr;
+            temp->prev->next = nullptr;
             delete temp;
         }
     }
@@ -162,26 +146,110 @@ void deleteAtHead(node *&head)
         }
     }
 }
+node *deleteAtPos(node *&head, int pos)
+{
+
+    if (head == nullptr || pos < 1)
+    {
+        return head;
+    }
+
+    int i;
+    temp = head;
+    if (head == nullptr)
+    {
+        return head;
+    }
+
+    for (i = 1; temp != nullptr && i < pos; ++i)
+    {
+        temp = temp->next;
+    }
+    if (temp->prev != nullptr)
+    {
+        temp->prev->next = temp->next;
+    }
+    else
+    {
+        head = temp->next;
+    }
+    if (temp->next != nullptr)
+    {
+        temp->next->prev = temp->prev;
+    }
+    delete temp;
+    return head;
+}
+
+void reverse(node *&head)
+{
+    temp = nullptr;
+    curr = head;
+
+    while (curr != nullptr)
+    {
+        temp = curr->prev;
+        curr->prev = curr->next;
+        curr->next = temp;
+        curr = curr->prev;
+    }
+    if (temp != nullptr)
+    {
+        head = temp->prev;
+    }
+}
+
+void swap(node *a,node *b){
+    int temp=a->data;
+    a->data=b->data;
+    b->data=temp;
+}
+void sort(node *head) {
+    if (!head) 
+        return;
+
+    bool swapped;
+    node *curr;
+    node *lastsorted = nullptr;
+
+    do {
+        swapped = false;
+        curr = head;
+
+        while (curr->next != lastsorted) {  // Ensure we stop before last sorted element
+            if (curr->data > curr->next->data) {
+                swap(curr, curr->next);
+                swapped = true;
+            }
+            curr = curr->next;
+        }
+        lastsorted = curr;  // Set lastsorted to the last node in this pass
+    } while (swapped);
+}
+
 int main()
 {
     node *head = nullptr;
     // Create a node
-    create(head, 2);
-    create(head, 3);
-    create(head, 4);
-    insert(head, 8);
+    create(head, 100);
 
     // insert at first position
-     insertAtFirst(head, 1);
+    insertAtFirst(head, 0);
 
     // insert at given position
-     insertAtPos(head, 20, 3);
+    insertAtPos(head, 5, 3);
 
     // delete a head node
-     deleteAtHead(head);
+    deleteAtHead(head);
 
     // delete last node
-     deleteAtTail(head);
+    deleteAtTail(head);
+
+    //delete node at specific position
+    deleteAtPos(head, 4);
+
+    sort(head);
+
     // display list of nodes
     display(head);
 
