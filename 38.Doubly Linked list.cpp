@@ -227,11 +227,37 @@ void sort(node *head) {
     } while (swapped);
 }
 
+void search(node* head, int value) {
+    curr = head;
+    bool found = false;
+    int i=1;
+
+    // Traverse the list to search for the value
+    while (curr != nullptr) {
+        if (curr->data == value) {
+            found = true;  // Value found
+            cout <<endl<< "Value found at position :"<<i << endl;
+            break;  // Exit the loop once the value is found
+        }
+        i++;
+        curr = curr->next;
+    }
+
+    if (!found) {
+        cout <<endl<< "Value " << value << " not found in the list." << endl;
+    }
+}
+
 int main()
 {
     node *head = nullptr;
     // Create a node
     create(head, 100);
+    create(head, 200);
+    create(head, 300);
+    create(head, 400);
+    create(head, 500);
+    create(head, 600);
 
     // insert at first position
     insertAtFirst(head, 0);
@@ -252,7 +278,7 @@ int main()
 
     // display list of nodes
     display(head);
-
+    search(head,500);
     // count the node
     Count(head);
 }
